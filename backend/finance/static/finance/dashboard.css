@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.dashboard-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.dashboard-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #7b2ff7, #f107a3);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-links a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.dashboard-links a span {
+    font-size: 1.4rem;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    /* Fallback color */
+    color: #f107a3;
+    /* Gradient text for supported browsers */
+    background: linear-gradient(135deg, #7b2ff7, #f107a3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.summary-box {
+    background: #1e1e1e;
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.summary-box h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.summary-box p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 8px 0 0;
+}
+
+.income-box {
+    background: linear-gradient(135deg, #06d035, #6fdc8c);
+}
+
+.expense-box {
+    background: linear-gradient(135deg, #ab0818, #be3232);
+}
+
+.balance-box {
+    background: linear-gradient(135deg, #007bff, #6ec6ff);
+}
+
+.summary-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+
+.chart-container {
+    margin-top: 40px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+canvas {
+    max-width: 100%;
+}
+/* Match Doughnut Chart size to Monthly Trends Chart */
+#categoryExpenseChart {
+    width: 55%;
+    height: 250px; /* same height as your line chart container */
+    max-width: none;
+    margin: auto;
+    display: block;
+}
+
+

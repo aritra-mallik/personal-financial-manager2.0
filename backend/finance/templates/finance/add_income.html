@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Income - Finance Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Add Income</h1></header>
+<main>
+    <form>
+        <label>Source</label>
+        <input type="text" placeholder="Salary, Freelancing, etc." required>
+        <label>Amount</label>
+        <input type="number" placeholder="Enter amount" required>
+        <label>Date</label>
+        <input type="date" required>
+        <label>Category</label>
+        <select>
+            <option>Salary</option>
+            <option>Freelancing</option>
+            <option>Investments</option>
+        </select>
+        <button type="submit">Add Income</button>
+    </form>
+    <div class="chart-placeholder"><canvas id="incomeChart"></canvas></div>
+</main>
+<a href="{% url 'dashboard' %}" class="back-btn">⬅ Back to Dashboard</a>
+<footer><p>Finance Manager © 2025</p></footer>
+
+<script>
+const ctxIncome = document.getElementById('incomeChart');
+new Chart(ctxIncome, {
+    type: 'doughnut',
+    data: {
+        labels: ['Salary', 'Freelancing', 'Investments'],
+        datasets: [{
+            data: [3000, 1200, 1000],
+            backgroundColor: ['#00BFA6', '#36A2EB', '#FFCE56']
+        }]
+    },
+    options: {
+        plugins: { legend: { labels: { color: '#E0E0E0' } } }
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* Dark mode theme */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #E0E0E0;
+}
+
+/* Layout */
+header, footer {
+    background: linear-gradient(135deg, #3C0052 0%, #8f6003 100%);
+    padding: 15px 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #1E1E1E;
+}
+
+table th, table td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #00BFA6;
+    color: black;
+}
+
+/* Forms */
+form {
+    background-color: #1E1E1E;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, select, textarea, button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+input, select, textarea {
+    background-color: #2C2C2C;
+    color: #E0E0E0;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+button {
+    background-color: #00BFA6;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #00a88f;
+}
+
+
+/* Cards */
+.card {
+    background-color: #1E1E1E;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Chart placeholder */
+.chart-placeholder {
+    background-color: #2C2C2C;
+    height: 250px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    margin-top: 15px;
+}
+.back-btn {
+    display: inline-block;
+    background: #00BFA6;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.back-btn:hover {
+    background: #009E8E;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+    table tr {
+        margin-bottom: 10px;
+    }
+    table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    table td::before {
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+        color: #aaa;
+    }
+}

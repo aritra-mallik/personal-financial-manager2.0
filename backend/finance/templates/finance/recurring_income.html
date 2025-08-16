@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recurring Income - Finance Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Recurring Income</h1></header>
+<main>
+    <form>
+        <label>Source</label>
+        <input type="text" placeholder="Monthly Salary" required>
+        <label>Amount</label>
+        <input type="number" required>
+        <label>Frequency</label>
+        <select><option>Monthly</option><option>Quarterly</option><option>Yearly</option></select>
+        <button type="submit">Add Recurring Income</button>
+    </form>
+    <h2>Current Recurring Income</h2>
+    <table>
+        <tr><th>Source</th><th>Amount</th><th>Frequency</th></tr>
+        <tr><td>Job Salary</td><td>$3,000</td><td>Monthly</td></tr>
+    </table>
+    <div class="chart-placeholder"><canvas id="recIncomeChart"></canvas></div>
+</main>
+<a href="{% url 'dashboard' %}" class="back-btn">⬅ Back to Dashboard</a>
+
+<footer><p>Finance Manager © 2025</p></footer>
+
+<script>
+new Chart(document.getElementById('recIncomeChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Job Salary', 'Rental Income'],
+        datasets: [{
+            data: [3000, 800],
+            backgroundColor: ['#00BFA6', '#36A2EB']
+        }]
+    },
+    options: { plugins: { legend: { labels: { color: '#E0E0E0' } } } }
+});
+</script>
+</body>
+</html>
