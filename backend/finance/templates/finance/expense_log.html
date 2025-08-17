@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Log - Finance Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Expense Log</h1></header>
+{% include 'finance/menu.html' %}
+<main>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Expense</th>
+            <th>Amount</th>
+        </tr>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.name }}</td>
+            <td>${{ expense.amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="chart-placeholder">
+        <canvas id="expenseLogChart"></canvas>
+    </div>
+</main>
+<a href="{% url 'dashboard' %}" class="back-btn">⬅ Back to Dashboard</a>
+
+<footer><p>Finance Manager © 2025</p></footer>
+
+<script>
+    const expenseLabels ={{ labels|safe }};
+    const expenseData ={{ data|safe }};
+
+    new Chart(document.getElementById('expenseLogChart'), {
+        type: 'line',
+        data: {
+            labels: expenseLabels,
+            datasets: [{
+                label: 'Expenses ($)',
+                data: expenseData,
+                borderColor: '#FF6384',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: '#E0E0E0' } } },
+            scales: {
+                x: { ticks: { color: '#E0E0E0' } },
+                y: { ticks: { color: '#E0E0E0' } }
+            }
+        }
+    });
+</script>
+</body>
+</html>

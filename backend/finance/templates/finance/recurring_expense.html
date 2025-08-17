@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recurring Expense - Finance Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Recurring Expenses</h1></header>
+{% include 'finance/menu.html' %}
+
+<main>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Expense Name</label>
+        <input type="text" name="name" placeholder="Rent, Subscription" required>
+
+        <label>Amount</label>
+        <input type="number" name="amount" required>
+
+        <label>Frequency</label>
+        <select name="frequency">
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+            <option value="Yearly">Yearly</option>
+        </select>
+
+        <label>Category</label>
+        <select name="category">
+            <option value="Food">Groceries</option>
+            <option value="Rent">Rent</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Subscriptions">Subscriptions</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <button type="submit">Add Recurring Expense</button>
+    </form>
+
+    <h2>Current Recurring Expenses</h2>
+    <table>
+        <tr><th>Expense</th><th>Amount</th><th>Frequency</th></tr>
+        {% for exp in expenses %}
+        <tr>
+            <td>{{ exp.name }}</td>
+            <td>{{ exp.amount }}</td>
+            <td>{{ exp.frequency }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="chart-placeholder" style="height:300px;">
+        <canvas id="recExpenseChart"></canvas>
+    </div>
+</main>
+
+<a href="{% url 'dashboard' %}" class="back-btn">⬅ Back to Dashboard</a>
+<footer><p>Finance Manager © 2025</p></footer>
+
+<script>
+const ctxRecExpense = document.getElementById('recExpenseChart');
+new Chart(ctxRecExpense, {
+    type: 'pie',
+    data: {
+        labels: {{ categories|safe }},
+        datasets: [{
+            data: {{ chart_data|safe }},
+            backgroundColor: ['#FF6384', '#FFCE56', '#36A2EB', '#00BFA6']
+        }]
+    },
+    options: {
+        plugins: { legend: { labels: { color: '#E0E0E0', font: { size: 14 } } } },
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+</script>
+</body>
+</html>

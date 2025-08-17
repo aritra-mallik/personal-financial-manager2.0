@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recurring Income - Finance Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Recurring Income</h1></header>
+{% include 'finance/menu.html' %}
+
+<main>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Source</label>
+        <input type="text" name="source" placeholder="Monthly Salary" required>
+
+        <label>Amount</label>
+        <input type="number" name="amount" required>
+
+        <label>Frequency</label>
+        <select name="frequency">
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+            <option value="Yearly">Yearly</option>
+        </select>
+
+        <label>Category</label>
+        <select name="category">
+            <option value="Salary">Salary</option>
+            <option value="Freelancing">Freelancing</option>
+            <option value="Investments">Investments</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <button type="submit">Add Recurring Income</button>
+    </form>
+
+    <h2>Current Recurring Income</h2>
+    <table>
+        <tr><th>Source</th><th>Amount</th><th>Frequency</th></tr>
+        {% for inc in incomes %}
+        <tr>
+            <td>{{ inc.source }}</td>
+            <td>{{ inc.amount }}</td>
+            <td>{{ inc.frequency }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="chart-placeholder" style="height:300px;">
+        <canvas id="recIncomeChart"></canvas>
+    </div>
+</main>
+
+<a href="{% url 'dashboard' %}" class="back-btn">⬅ Back to Dashboard</a>
+<footer><p>Finance Manager © 2025</p></footer>
+
+<script>
+const ctxRecIncome = document.getElementById('recIncomeChart');
+new Chart(ctxRecIncome, {
+    type: 'pie',
+    data: {
+        labels: {{ categories|safe }},
+        datasets: [{
+            data: {{ chart_data|safe }},
+            backgroundColor: ['#00BFA6', '#36A2EB', '#FFCE56', '#FF6384']
+        }]
+    },
+    options: {
+        plugins: { legend: { labels: { color: '#E0E0E0', font: { size: 14 } } } },
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+</script>
+</body>
+</html>

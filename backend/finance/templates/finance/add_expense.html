@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Expense - Finance Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Add Expense</h1></header>
+{% include 'finance/menu.html' %}
+
+<main>
+    <!-- Add Expense Form -->
+    <form method="POST" style="margin-bottom:20px;">
+        {% csrf_token %}
+        <label>Expense Name</label>
+        <input type="text" name="name" placeholder="Groceries, Rent, etc." required>
+
+        <label>Amount</label>
+        <input type="number" name="amount" placeholder="Enter amount" required>
+
+        <label>Date</label>
+        <input type="date" name="date" value="{{ timezone.now|date:'Y-m-d' }}" required>
+
+        <label>Category</label>
+        <select name="category">
+            <option value="Food">Food</option>
+            <option value="Rent">Rent</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <!-- Expense Chart -->
+    <div class="chart-placeholder" style="height:300px;">
+        <canvas id="expenseChart"></canvas>
+    </div>
+</main>
+
+<a href="{% url 'dashboard' %}" class="back-btn">⬅ Back to Dashboard</a>
+
+<footer><p>Finance Manager © 2025</p></footer>
+
+<script>
+const ctxExpense = document.getElementById('expenseChart');
+new Chart(ctxExpense, {
+    type: 'doughnut',
+    data: {
+        labels: {{ categories|safe }},
+        datasets: [{
+            data: {{ chart_data|safe }},
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8AFF33', '#FF33F6']
+        }]
+    },
+    options: {
+        plugins: { legend: { labels: { color: '#E0E0E0', font: { size: 14 } } } },
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+</script>
+</body>
+</html>

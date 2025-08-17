@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finance/dashboard.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>📊 Finance Dashboard</h1>
+
+    <div class="dashboard-links">
+        <a href="{% url 'add_income' %}"><span>💰</span> Add Income</a>
+        <a href="{% url 'add_expense' %}"><span>💸</span> Add Expense</a>
+        <a href="{% url 'recurring_income' %}"><span>🔁</span> Recurring Income</a>
+        <a href="{% url 'recurring_expense' %}"><span>⏱️</span> Recurring Expense</a>
+        <a href="{% url 'expense_alerts' %}"><span>🚨</span> Expense Alerts</a>
+        <a href="{% url 'income_history' %}"><span>📜</span> Income History</a>
+        <a href="{% url 'expense_log' %}"><span>💳</span> Expense Log</a>
+        <a href="{% url 'payment_analysis' %}"><span>📊</span> Payment Analysis</a>
+        <a href="{% url 'trends' %}"><span>📈</span> Trends</a>
+        <a href="{% url 'category_manager' %}"><span>📂</span> Category Manager</a>
+    </div>
+    
+    <!-- Summary Boxes -->
+    <div class="summary-container">
+        <div class="summary-box income-box">
+            <h3>Total Income</h3>
+            <p>${{ income_total }}</p>
+        </div>
+        <div class="summary-box expense-box">
+            <h3>Total Expense</h3>
+            <p>${{ expense_total }}</p>
+        </div>
+        <div class="summary-box balance-box">
+            <h3>Balance</h3>
+            <p>${{ balance }}</p>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-container">
+        <canvas id="incomeExpenseChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="monthlyTrendsChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="categoryExpenseChart"></canvas>
+    </div>
+</div>
+
+<!-- Chart.js Scripts -->
+<script>
+const months = {{ months|safe }};
+const incomeData = {{ income_data|safe }};
+const expenseData = {{ expense_data|safe }};
+const weeks = {{ weeks|safe }};
+const weeklyIncomeData = {{ weekly_income_data|safe }};
+const weeklyExpenseData = {{ weekly_expense_data|safe }};
+const categoryLabels = {{ category_labels|safe }};
+const categoryValues = {{ category_values|safe }};
+
+// Income vs Expense (Weekly - REAL DATA)
+const ctx1 = document.getElementById('incomeExpenseChart').getContext('2d');
+new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: weeks,
+        datasets: [
+            {
+                label: 'Income',
+                data: weeklyIncomeData,
+                backgroundColor: 'rgba(123, 47, 247, 0.7)',
+                borderColor: 'rgba(123, 47, 247, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Expense',
+                data: weeklyExpenseData,
+                backgroundColor: 'rgba(241, 7, 163, 0.7)',
+                borderColor: 'rgba(241, 7, 163, 1)',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { labels: { color: 'white' } },
+            title: { display: true, text: 'Income vs Expense (Weekly)', color: 'white' }
+        },
+        scales: {
+            x: { ticks: { color: 'white' }, grid: { color: '#333' } },
+            y: { ticks: { color: 'white' }, grid: { color: '#333' } }
+        }
+    }
+});
+
+// Monthly Trends (line)
+const ctx2 = document.getElementById('monthlyTrendsChart').getContext('2d');
+new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: months,
+        datasets: [
+            {
+                label: 'Income',
+                data: incomeData,
+                borderColor: 'rgba(123, 47, 247, 1)',
+                backgroundColor: 'rgba(123, 47, 247, 0.3)',
+                fill: true,
+                tension: 0.3
+            },
+            {
+                label: 'Expense',
+                data: expenseData,
+                borderColor: 'rgba(241, 7, 163, 1)',
+                backgroundColor: 'rgba(241, 7, 163, 0.3)',
+                fill: true,
+                tension: 0.3
+            }
+        ]
+    }
+});
+
+// Category-wise Expense
+const ctx3 = document.getElementById('categoryExpenseChart').getContext('2d');
+new Chart(ctx3, {
+    type: 'doughnut',
+    data: {
+        labels: categoryLabels,
+        datasets: [{
+            data: categoryValues,
+            backgroundColor: [
+                'rgba(123, 47, 247, 0.7)',
+                'rgba(241, 7, 163, 0.7)',
+                'rgba(58, 123, 213, 0.7)',
+                'rgba(255, 193, 7, 0.7)',
+                'rgba(76, 175, 80, 0.7)'
+            ]
+        }]
+    }
+});
+</script>
+
+</body>
+</html>
